@@ -2,14 +2,18 @@ name: 'Prepare Release'
 description: 'Interrogates the commits on a branch, since the last release, and determines the release type and release notes.'
 author: 'Karl Hulme'
 inputs:
-  releaseBranch:
-    description: 'The name of a branch.'
+  branchName:
+    description: 'The name of the branch that is being targetted for release.'
     required: true
 outputs:
   canRelease:
     description: 'A value of ''yes'' or ''no'' indicating if a release can be carried out.'
   releaseFailureReason:
     description: 'If ''canRelease'' is equal to ''no'' then this property will contain a reason why.'
+  releaseVersion:
+    description: 'The version of the new release in major.minor.patch format.'
+  branchLtsName:
+    description: 'The name of a new long-term-support branch that should be created in lts_vX.'
   releaseType:
     description: 'The type of release. One of the following values: ''major'', ''minor'' or ''patch''.'
   releaseNotes:

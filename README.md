@@ -8,12 +8,14 @@ The https://github.com/karlhulme/github-action.analyse-issue-comment action can 
 
 ## Inputs
 
-* **releaseBranch** - The name of the branch from which a release is being created.
+* **branchName** - The name of the branch that is being targetted for release.
 
 ## Outputs
 
 * **canRelease** - A value of *yes* or *no* indicating if a release can be carried out.
 * **releaseFailureReason** - If *canRelease* is equal to *no* then this property will contain a reason why.
+* **releaseVersion** - The version of the new release in major.minor.patch format.
+* **branchLtsName** - The version of a new long-term-support branch that should be created in lts_vX format.
 * **releaseType** - The type of release.  One of the following values: *major*, *minor* or *patch*.
 * **releaseNotes** - A formatted markdown block containing the commit comments since the last release.
 
@@ -33,7 +35,8 @@ jobs:
       - name: Prepare Release
         uses: karlhulme/github-action-prepare-release@master
         with:
-          releaseBranch: master # or ${{ steps.step_id.outputs.releaseBranch }}
+          releaseBranch: master 
+          # or perhaps ${{ steps.step_id.outputs.releaseBranch }}
 ```
 
 ## Development
