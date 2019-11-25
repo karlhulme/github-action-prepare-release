@@ -1,0 +1,41 @@
+{
+  "name": "github-action-prepare-release",
+  "version": "1.0.0",
+  "description": "Reads the commits on a branch, since the last release, and determines the release type and release notes.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build src/index.js -o dist",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karlhulme/github-action-prepare-release.git"
+  },
+  "author": "Karl Hulme <karlhulme@hotmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/karlhulme/github-action-prepare-release/issues"
+  },
+  "homepage": "https://github.com/karlhulme/github-action-prepare-release#readme",
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "standard": "^14.3.1",
+    "@zeit/ncc": "^0.20.5"
+  },
+  "dependencies": {
+    "@actions/core": "^1.0.0",
+    "@actions/github": "^1.0.0"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 0
+      }
+    },
+    "testEnvironment": "node"
+  }
+}

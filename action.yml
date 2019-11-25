@@ -1,0 +1,22 @@
+name: 'Prepare Release'
+description: 'Interrogates the commits on a branch, since the last release, and determines the release type and release notes.'
+author: 'Karl Hulme'
+inputs:
+  releaseBranch:
+    description: 'The name of a branch.'
+    required: true
+outputs:
+  canRelease:
+    description: 'A value of ''yes'' or ''no'' indicating if a release can be carried out.'
+  releaseFailureReason:
+    description: 'If ''canRelease'' is equal to ''no'' then this property will contain a reason why.'
+  releaseType:
+    description: 'The type of release. One of the following values: ''major'', ''minor'' or ''patch''.'
+  releaseFailureReason:
+    description: 'A formatted markdown block containing the commit comments since the last release.'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'tag'
+  color: 'gray-dark'
