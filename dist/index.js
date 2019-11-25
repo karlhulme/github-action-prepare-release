@@ -4917,7 +4917,7 @@ const run = async ({ branchName, owner, repo, listCommits, listReleases }) => {
       : { major: 0, minor: 0, patch: 0 }
 
     const commits = latestReleaseOfBranch
-      ? await getLatestCommitsOnBranch(owner, repo, branchName, latestReleaseOfBranch.publishedAt, listCommits)
+      ? await getLatestCommitsOnBranch(owner, repo, branchName, latestReleaseOfBranch.published_at, listCommits)
       : await getAllCommitsOnBranch(owner, repo, branchName, listCommits)
 
     const releaseType = getMostImpactfulCommit(commits)

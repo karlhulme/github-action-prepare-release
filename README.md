@@ -37,6 +37,8 @@ jobs:
         with:
           releaseBranch: master 
           # or perhaps ${{ steps.step_id.outputs.releaseBranch }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 ```
 
 ## Development
