@@ -23,28 +23,28 @@ const sortedCommitsWithDocsOnly = {
 }
 
 test('Compile release notes when all sections are included.', async () => {
-  expect(compileReleaseNotes(sortedCommitsWithEverything)).toEqual('# Breaking Changes\n' +
+  expect(compileReleaseNotes(sortedCommitsWithEverything)).toEqual('## Breaking Changes\n' +
     '* extra parameter added to constructor\n\n' +
-    '# Features\n' +
+    '## Features\n' +
     '* can now produce pdfs\n' +
     '* works underwater\n\n' +
-    '# Fixes\n' +
+    '## Fixes\n' +
     '* fixed a typo in the buffer allocation\n' +
     '* removed the trailing zeroes\n\n' +
-    '# Documentation\n' +
+    '## Documentation\n' +
     '* fixed typos in heading 2\n\n'
   )
 })
 
 test('Compile release notes for just fixes.', async () => {
-  expect(compileReleaseNotes(sortedCommitsWithFixesOnly)).toEqual('# Fixes\n' +
+  expect(compileReleaseNotes(sortedCommitsWithFixesOnly)).toEqual('## Fixes\n' +
     '* fixed a typo in the buffer allocation\n' +
     '* removed the trailing zeroes\n\n'
   )
 })
 
 test('Compile release notes just docs.', async () => {
-  expect(compileReleaseNotes(sortedCommitsWithDocsOnly)).toEqual('# Documentation\n' +
+  expect(compileReleaseNotes(sortedCommitsWithDocsOnly)).toEqual('## Documentation\n' +
     '* fixed typos in heading 2\n\n'
   )
 })

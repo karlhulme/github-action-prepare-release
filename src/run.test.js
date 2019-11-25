@@ -48,7 +48,7 @@ test('Prepare a new release for master.', async () => {
     releaseVersion: '4.0.0',
     branchLtsName: 'lts_v3',
     releaseType: 'major',
-    releaseNotes: '# Breaking Changes\n* Add red option\n\n# Fixes\n* Prevent crash on divide by zero\n\n'
+    releaseNotes: '## Breaking Changes\n* Add red option\n\n## Fixes\n* Prevent crash on divide by zero\n\n'
   })
 })
 
@@ -68,7 +68,7 @@ test('Prepare a new release for an lts branch.', async () => {
     releaseVersion: '2.1.5',
     branchLtsName: null,
     releaseType: 'patch',
-    releaseNotes: '# Fixes\n* Prevent crash on divide by zero\n\n'
+    releaseNotes: '## Fixes\n* Prevent crash on divide by zero\n\n'
   })
 })
 
@@ -78,7 +78,7 @@ test('Prepare a first release for master.', async () => {
     releaseVersion: '1.0.0',
     branchLtsName: null,
     releaseType: 'major',
-    releaseNotes: '# Breaking Changes\n* Add red option\n\n# Fixes\n* Prevent crash on divide by zero\n\n'
+    releaseNotes: '## Breaking Changes\n* Add red option\n\n## Fixes\n* Prevent crash on divide by zero\n\n'
   })
 })
 
