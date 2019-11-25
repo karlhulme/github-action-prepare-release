@@ -12,7 +12,7 @@ outputs:
     description: 'If ''canRelease'' is equal to ''no'' then this property will contain a reason why.'
   releaseType:
     description: 'The type of release. One of the following values: ''major'', ''minor'' or ''patch''.'
-  releaseFailureReason:
+  releaseNotes:
     description: 'A formatted markdown block containing the commit comments since the last release.'
 runs:
   using: 'node12'
