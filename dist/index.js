@@ -4928,7 +4928,9 @@ const run = async ({ branchName, owner, repo, listCommits, listReleases }) => {
       throw new Error('Major releases can only be made on the master branch.')
     }
 
-    const branchLtsName = releaseType === 'major' && currentVersion.major > 0
+    const ltsRelease = releaseType === 'major' && currentVersion.major > 0
+
+    const ltsNewBranchName = ltsRelease
       ? `lts_v${currentVersion.major}`
       : null
 
@@ -4938,9 +4940,12 @@ const run = async ({ branchName, owner, repo, listCommits, listReleases }) => {
     return {
       canRelease: 'yes',
       releaseVersion: `${nextVersion.major}.${nextVersion.minor}.${nextVersion.patch}`,
-      branchLtsName,
       releaseType,
-      releaseNotes
+      releaseNotes,
+      ltsRelease: ltsRelease ? 'yes' : 'no',
+      ltsNewBranchName,
+      ltsCloneFromTag: ltsRelease ? `v${currentVersion.major}.${currentVersion.minor}.${currentVersion.patch}` : null,
+      ltsReleaseName: ltsRelease ? `v${currentVersion.major}.${currentVersion.minor + 1}.0` : null
     }
   } catch (err) {
     return {

@@ -15,9 +15,12 @@ The https://github.com/karlhulme/github-action.analyse-issue-comment action can 
 * **canRelease** - A value of *yes* or *no* indicating if a release can be carried out.
 * **releaseFailureReason** - If *canRelease* is equal to *no* then this property will contain a reason why.
 * **releaseVersion** - The version of the new release in major.minor.patch format.
-* **branchLtsName** - The version of a new long-term-support branch that should be created in lts_vX format.
 * **releaseType** - The type of release.  One of the following values: *major*, *minor* or *patch*.
 * **releaseNotes** - A formatted markdown block containing the commit comments since the last release.
+* **ltsRelease** - A value of *yes* or *no* indicating if an LTS branch should be created.
+* **ltsNewBranchName** - The name of a new long-term-support branch that should be created in lts_vX format.
+* **ltsCloneFromTag** - The name of the release tag that identifies the origin branch for the new LTS branch.
+* **ltsReleaseName** - The name of a new release that will be created on the LTS branch.
 
 ## Example
 
