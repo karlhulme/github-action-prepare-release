@@ -51,9 +51,7 @@ module.exports = require("os");
 /***/ }),
 
 /***/ 430:
-/***/ (function(module, __unusedexports, __webpack_require__) {
-
-const considerRelease = __webpack_require__(566)
+/***/ (function(module) {
 
 /**
  * Runs the Github action and returns a keyed object with values for output.
@@ -344,14 +342,6 @@ function getState(name) {
 }
 exports.getState = getState;
 //# sourceMappingURL=core.js.map
-
-/***/ }),
-
-/***/ 566:
-/***/ (function() {
-
-eval("require")("./considerRelease");
-
 
 /***/ }),
 

@@ -1,5 +1,3 @@
-const considerRelease = require('./considerRelease')
-
 /**
  * Runs the Github action and returns a keyed object with values for output.
  * @param {Object} props The input properties to the github action.
