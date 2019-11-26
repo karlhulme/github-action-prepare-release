@@ -10,6 +10,7 @@ const clean = s => {
     .replace(/--fix/g, '')
     .replace(/--docs/g, '')
     .replace(/[\n]/g, ' ')
+    .replace(/[\r]/g, ' ')
     .trim()
 }
 

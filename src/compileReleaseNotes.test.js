@@ -5,7 +5,8 @@ const sortedCommitsWithEverything = {
   breakingChanges: ['--break extra parameter added to constructor'],
   features: ['--feature can now produce pdfs', '--feature works underwater'],
   fixes: ['--fix fixed a typo in the buffer allocation', '--fix removed the trailing zeroes'],
-  docs: ['--docs fixed typos in heading 2']
+  docs: ['--docs fixed typos in heading 2'],
+  misc: ['this will be ignored', 'as will this']
 }
 
 const sortedCommitsWithFixesOnly = {

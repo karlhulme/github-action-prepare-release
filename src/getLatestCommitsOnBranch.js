@@ -8,9 +8,18 @@
  * @param {Function} listCommits A function that queries github for commits.
  */
 const getLatestCommitsOnBranch = async (owner, repo, branchName, since, listCommits) => {
-  const commitsResult = await listCommits({ owner, repo, sha: branchName, since: since })
+  let more = true
+  let pageNo = 0
+  const commitsResultData = []
 
-  return commitsResult.data.map(c => c.commit.message)
+  while (more) {
+    const commitsResult = await listCommits({ owner, repo, sha: branchName, since: since || undefined, per_page: 100, page: pageNo })
+    commitsResultData.push(...commitsResult.data)
+    more = commitsResult.data.length === 100
+    pageNo++
+  }
+
+  return commitsResultData.map(c => c.commit.message)
 }
 
 module.exports = getLatestCommitsOnBranch

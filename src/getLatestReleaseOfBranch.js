@@ -6,9 +6,18 @@
  * @param {Function} listReleases A function that queries github for releases.
  */
 const getLatestReleaseOfBranch = async (owner, repo, branchName, listReleases) => {
-  const releasesResult = await listReleases({ owner, repo })
+  let more = true
+  let pageNo = 0
+  const releasesResultData = []
 
-  const sortedMatchingReleases = releasesResult.data
+  while (more) {
+    const releasesResult = await listReleases({ owner, repo, per_page: 100, page: pageNo })
+    releasesResultData.push(...releasesResult.data)
+    more = releasesResult.data.length === 100
+    pageNo++
+  }
+
+  const sortedMatchingReleases = releasesResultData
     .filter(r => r.target_commitish === branchName)
     .sort((a, b) => b.published_at.localeCompare(a.published_at))
 

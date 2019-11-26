@@ -1,6 +1,5 @@
 const getLatestReleaseOfBranch = require('./getLatestReleaseOfBranch')
 const getLatestCommitsOnBranch = require('./getLatestCommitsOnBranch')
-const getAllCommitsOnBranch = require('./getAllCommitsOnBranch')
 const getMostImpactfulCommit = require('./getMostImpactfulCommit')
 const determineBranchVersionNumber = require('./determineBranchVersionNumber')
 const determineNextVersionNumber = require('./determineNextVersionNumber')
@@ -21,7 +20,7 @@ const run = async ({ branchName, owner, repo, listCommits, listReleases }) => {
 
     const commits = latestReleaseOfBranch
       ? await getLatestCommitsOnBranch(owner, repo, branchName, latestReleaseOfBranch.published_at, listCommits)
-      : await getAllCommitsOnBranch(owner, repo, branchName, listCommits)
+      : await getLatestCommitsOnBranch(owner, repo, branchName, null, listCommits)
 
     const releaseType = getMostImpactfulCommit(commits)
 

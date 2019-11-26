@@ -1779,9 +1779,18 @@ module.exports = {"_from":"@octokit/rest@^16.15.0","_id":"@octokit/rest@16.35.0"
  * @param {Function} listReleases A function that queries github for releases.
  */
 const getLatestReleaseOfBranch = async (owner, repo, branchName, listReleases) => {
-  const releasesResult = await listReleases({ owner, repo })
+  let more = true
+  let pageNo = 0
+  const releasesResultData = []
 
-  const sortedMatchingReleases = releasesResult.data
+  while (more) {
+    const releasesResult = await listReleases({ owner, repo, per_page: 100, page: pageNo })
+    releasesResultData.push(...releasesResult.data)
+    more = releasesResult.data.length === 100
+    pageNo++
+  }
+
+  const sortedMatchingReleases = releasesResultData
     .filter(r => r.target_commitish === branchName)
     .sort((a, b) => b.published_at.localeCompare(a.published_at))
 
@@ -4891,7 +4900,6 @@ function escape(s) {
 
 const getLatestReleaseOfBranch = __webpack_require__(232)
 const getLatestCommitsOnBranch = __webpack_require__(494)
-const getAllCommitsOnBranch = __webpack_require__(524)
 const getMostImpactfulCommit = __webpack_require__(25)
 const determineBranchVersionNumber = __webpack_require__(302)
 const determineNextVersionNumber = __webpack_require__(642)
@@ -4912,7 +4920,7 @@ const run = async ({ branchName, owner, repo, listCommits, listReleases }) => {
 
     const commits = latestReleaseOfBranch
       ? await getLatestCommitsOnBranch(owner, repo, branchName, latestReleaseOfBranch.published_at, listCommits)
-      : await getAllCommitsOnBranch(owner, repo, branchName, listCommits)
+      : await getLatestCommitsOnBranch(owner, repo, branchName, null, listCommits)
 
     const releaseType = getMostImpactfulCommit(commits)
 
@@ -7155,9 +7163,18 @@ module.exports = resolveCommand;
  * @param {Function} listCommits A function that queries github for commits.
  */
 const getLatestCommitsOnBranch = async (owner, repo, branchName, since, listCommits) => {
-  const commitsResult = await listCommits({ owner, repo, sha: branchName, since: since })
+  let more = true
+  let pageNo = 0
+  const commitsResultData = []
 
-  return commitsResult.data.map(c => c.commit.message)
+  while (more) {
+    const commitsResult = await listCommits({ owner, repo, sha: branchName, since: since || undefined, per_page: 100, page: pageNo })
+    commitsResultData.push(...commitsResult.data)
+    more = commitsResult.data.length === 100
+    pageNo++
+  }
+
+  return commitsResultData.map(c => c.commit.message)
 }
 
 module.exports = getLatestCommitsOnBranch
@@ -7343,27 +7360,6 @@ module.exports = Hook
 module.exports.Hook = Hook
 module.exports.Singular = Hook.Singular
 module.exports.Collection = Hook.Collection
-
-
-/***/ }),
-
-/***/ 524:
-/***/ (function(module) {
-
-/**
- * Gets all of the commits on a branch.
- * @param {String} owner The repo owner.
- * @param {String} repo The repo name.
- * @param {String} branchName The name of a branch.
- * @param {Function} listCommits A function that queries github for commits.
- */
-const getAllCommitsOnBranch = async (owner, repo, branchName, listCommits) => {
-  const commitsResult = await listCommits({ owner, repo, sha: branchName })
-
-  return commitsResult.data.map(c => c.commit.message)
-}
-
-module.exports = getAllCommitsOnBranch
 
 
 /***/ }),
@@ -8653,6 +8649,7 @@ const sortCommitsByCommitType = commits => {
   const features = []
   const fixes = []
   const docs = []
+  const misc = []
 
   for (const commit of commits) {
     if (commit.includes('--break')) {
@@ -8661,10 +8658,10 @@ const sortCommitsByCommitType = commits => {
       features.push(commit)
     } else if (commit.includes('--docs')) {
       docs.push(commit)
-    } else if (commit.includes('--ignore')) {
-      // don't report these
-    } else {
+    } else if (commit.includes('--fix')) {
       fixes.push(commit)
+    } else {
+      misc.push(commit)
     }
   }
 
@@ -8672,7 +8669,8 @@ const sortCommitsByCommitType = commits => {
     breakingChanges,
     features,
     fixes,
-    docs
+    docs,
+    misc
   }
 }
 
@@ -11500,6 +11498,7 @@ const clean = s => {
     .replace(/--fix/g, '')
     .replace(/--docs/g, '')
     .replace(/[\n]/g, ' ')
+    .replace(/[\r]/g, ' ')
     .trim()
 }
 

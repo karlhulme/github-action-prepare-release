@@ -8,6 +8,7 @@ const sortCommitsByCommitType = commits => {
   const features = []
   const fixes = []
   const docs = []
+  const misc = []
 
   for (const commit of commits) {
     if (commit.includes('--break')) {
@@ -16,10 +17,10 @@ const sortCommitsByCommitType = commits => {
       features.push(commit)
     } else if (commit.includes('--docs')) {
       docs.push(commit)
-    } else if (commit.includes('--ignore')) {
-      // don't report these
-    } else {
+    } else if (commit.includes('--fix')) {
       fixes.push(commit)
+    } else {
+      misc.push(commit)
     }
   }
 
@@ -27,7 +28,8 @@ const sortCommitsByCommitType = commits => {
     breakingChanges,
     features,
     fixes,
-    docs
+    docs,
+    misc
   }
 }
 
