@@ -79,6 +79,13 @@ test('Prepare a first release for master.', async () => {
   })
 })
 
+test('Reject an attempt to perform a release on an unamed branch.', async () => {
+  await expect(run({ branchName: '', owner: 'boss', repo: 'test', listCommits, listReleases })).resolves.toEqual({
+    canRelease: 'no',
+    releaseFailureReason: 'Error: Branch name not supplied.'
+  })
+})
+
 test('Reject an attempt to perform a breaking release on a non-master branch.', async () => {
   await expect(run({ branchName: 'lts_v2', owner: 'boss', repo: 'test', listCommits, listReleases })).resolves.toEqual({
     canRelease: 'no',

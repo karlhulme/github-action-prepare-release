@@ -12,6 +12,8 @@ const compileReleaseNotes = require('./compileReleaseNotes')
  */
 const run = async ({ branchName, owner, repo, listCommits, listReleases }) => {
   try {
+    if (!branchName) throw new Error('Branch name not supplied.')
+
     const latestReleaseOfBranch = await getLatestReleaseOfBranch(owner, repo, branchName, listReleases)
 
     const currentVersion = latestReleaseOfBranch

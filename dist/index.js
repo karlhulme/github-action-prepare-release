@@ -4912,6 +4912,8 @@ const compileReleaseNotes = __webpack_require__(982)
  */
 const run = async ({ branchName, owner, repo, listCommits, listReleases }) => {
   try {
+    if (!branchName) throw new Error('Branch name not supplied.')
+
     const latestReleaseOfBranch = await getLatestReleaseOfBranch(owner, repo, branchName, listReleases)
 
     const currentVersion = latestReleaseOfBranch
@@ -7949,7 +7951,7 @@ const entryPoint = async () => {
   const { owner, repo } = context.repo
 
   const input = {
-    branchName: core.getInput('branchName'),
+    branchName: guard(core.getInput('branchName')),
     owner,
     repo,
     listCommits: github.repos.listCommits,
