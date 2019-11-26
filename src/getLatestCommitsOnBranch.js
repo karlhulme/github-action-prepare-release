@@ -9,7 +9,7 @@
  */
 const getLatestCommitsOnBranch = async (owner, repo, branchName, since, listCommits) => {
   let more = true
-  let pageNo = 0
+  let pageNo = 1
   const commitsResultData = []
 
   while (more) {

@@ -7,7 +7,7 @@
  */
 const getLatestReleaseOfBranch = async (owner, repo, branchName, listReleases) => {
   let more = true
-  let pageNo = 0
+  let pageNo = 1
   const releasesResultData = []
 
   while (more) {

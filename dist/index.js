@@ -1780,7 +1780,7 @@ module.exports = {"_from":"@octokit/rest@^16.15.0","_id":"@octokit/rest@16.35.0"
  */
 const getLatestReleaseOfBranch = async (owner, repo, branchName, listReleases) => {
   let more = true
-  let pageNo = 0
+  let pageNo = 1
   const releasesResultData = []
 
   while (more) {
@@ -7164,7 +7164,7 @@ module.exports = resolveCommand;
  */
 const getLatestCommitsOnBranch = async (owner, repo, branchName, since, listCommits) => {
   let more = true
-  let pageNo = 0
+  let pageNo = 1
   const commitsResultData = []
 
   while (more) {
