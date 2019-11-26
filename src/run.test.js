@@ -47,11 +47,7 @@ test('Prepare a new release for master.', async () => {
     canRelease: 'yes',
     releaseVersion: '4.0.0',
     releaseType: 'major',
-    releaseNotes: '## Breaking Changes\n* Add red option\n\n## Fixes\n* Prevent crash on divide by zero\n\n',
-    ltsRelease: 'yes',
-    ltsNewBranchName: 'lts_v3',
-    ltsCloneFromTag: 'v3.6.7',
-    ltsReleaseName: 'v3.7.0'
+    releaseNotes: '## Breaking Changes\n* Add red option\n\n## Fixes\n* Prevent crash on divide by zero\n\n'
   })
 })
 
@@ -70,11 +66,7 @@ test('Prepare a new release for an lts branch.', async () => {
     canRelease: 'yes',
     releaseVersion: '2.1.5',
     releaseType: 'patch',
-    releaseNotes: '## Fixes\n* Prevent crash on divide by zero\n\n',
-    ltsRelease: 'no',
-    ltsNewBranchName: null,
-    ltsCloneFromTag: null,
-    ltsReleaseName: null
+    releaseNotes: '## Fixes\n* Prevent crash on divide by zero\n\n'
   })
 })
 
@@ -83,11 +75,7 @@ test('Prepare a first release for master.', async () => {
     canRelease: 'yes',
     releaseVersion: '1.0.0',
     releaseType: 'major',
-    releaseNotes: '## Breaking Changes\n* Add red option\n\n## Fixes\n* Prevent crash on divide by zero\n\n',
-    ltsRelease: 'no',
-    ltsNewBranchName: null,
-    ltsCloneFromTag: null,
-    ltsReleaseName: null
+    releaseNotes: '## Breaking Changes\n* Add red option\n\n## Fixes\n* Prevent crash on divide by zero\n\n'
   })
 })
 

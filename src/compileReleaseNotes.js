@@ -1,3 +1,7 @@
+/**
+ * Remove any commit flags and newlines from the string.
+ * @param {String} s A string.
+ */
 const clean = s => {
   return s
     .replace(/--break/g, '')
@@ -9,6 +13,11 @@ const clean = s => {
     .trim()
 }
 
+/**
+ * Compiles a markdown formatted text string combining all the
+ * commit notes, sorted by commit flag.
+ * @param {Array} sortedCommits An array of strings containing commit flags.
+ */
 const compileReleaseNotes = (sortedCommits) => {
   let result = ''
 

@@ -1,3 +1,8 @@
+/**
+ * Returns an object where each property is an array
+ * of commit comments that have the matching commit flag.
+ * @param {Array} commits An array of commit comments.
+ */
 const sortCommitsByCommitType = commits => {
   const breakingChanges = []
   const features = []

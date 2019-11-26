@@ -1768,26 +1768,16 @@ module.exports = {"_from":"@octokit/rest@^16.15.0","_id":"@octokit/rest@16.35.0"
 
 /***/ }),
 
-/***/ 219:
-/***/ (function(module) {
-
-const determineCurrentMajorVersionNumber = (branchLatestTagName) => {
-  if (!/^[v][0-9]+[.][0-9]+[.][0-9]+$/.test(branchLatestTagName)) {
-    throw new Error(`The latest tag_name of the branch '${branchLatestTagName}' is not a valid semver version number in the form 'v0.0.0'.`)
-  }
-
-  return Number(branchLatestTagName.substring(1, branchLatestTagName.indexOf('.')))
-}
-
-module.exports = determineCurrentMajorVersionNumber
-
-
-/***/ }),
-
 /***/ 232:
 /***/ (function(module) {
 
-
+/**
+ * Returns the most recently published release on a branch.
+ * @param {String} owner The repo owner
+ * @param {String} repo The name of a repo.
+ * @param {String} branchName The name of a branch.
+ * @param {Function} listReleases A function that queries github for releases.
+ */
 const getLatestReleaseOfBranch = async (owner, repo, branchName, listReleases) => {
   const releasesResult = await listReleases({ owner, repo })
 
@@ -3887,6 +3877,11 @@ function normalizePaginatedListResponse(octokit, url, response) {
 /***/ 302:
 /***/ (function(module) {
 
+/**
+ * Determines the version number of a branch given the tag name and
+ * return an object with major, minor and patch properties.
+ * @param {String} branchTagName The tag name of a branch.
+ */
 const determineBranchVersionNumber = branchTagName => {
   if (!/^[v][0-9]+[.][0-9]+[.][0-9]+$/.test(branchTagName)) {
     throw new Error(`The tag name '${branchTagName}' is not a valid semver version number in the form 'v0.0.0'.`)
@@ -4900,7 +4895,6 @@ const getAllCommitsOnBranch = __webpack_require__(524)
 const getMostImpactfulCommit = __webpack_require__(25)
 const determineBranchVersionNumber = __webpack_require__(302)
 const determineNextVersionNumber = __webpack_require__(642)
-const determineCurrentMajorVersionNumber = __webpack_require__(219)
 const sortCommitsByCommitType = __webpack_require__(838)
 const compileReleaseNotes = __webpack_require__(982)
 
@@ -4928,12 +4922,6 @@ const run = async ({ branchName, owner, repo, listCommits, listReleases }) => {
       throw new Error('Major releases can only be made on the master branch.')
     }
 
-    const ltsRelease = releaseType === 'major' && currentVersion.major > 0
-
-    const ltsNewBranchName = ltsRelease
-      ? `lts_v${currentVersion.major}`
-      : null
-
     const sortedCommits = sortCommitsByCommitType(commits)
     const releaseNotes = compileReleaseNotes(sortedCommits)
 
@@ -4941,11 +4929,7 @@ const run = async ({ branchName, owner, repo, listCommits, listReleases }) => {
       canRelease: 'yes',
       releaseVersion: `${nextVersion.major}.${nextVersion.minor}.${nextVersion.patch}`,
       releaseType,
-      releaseNotes,
-      ltsRelease: ltsRelease ? 'yes' : 'no',
-      ltsNewBranchName,
-      ltsCloneFromTag: ltsRelease ? `v${currentVersion.major}.${currentVersion.minor}.${currentVersion.patch}` : null,
-      ltsReleaseName: ltsRelease ? `v${currentVersion.major}.${currentVersion.minor + 1}.0` : null
+      releaseNotes
     }
   } catch (err) {
     return {
@@ -7162,6 +7146,14 @@ module.exports = resolveCommand;
 /***/ (function(module) {
 
 
+/**
+ * Gets all of the commits on a branch since the given point.
+ * @param {String} owner The repo owner.
+ * @param {String} repo The repo name.
+ * @param {String} branchName The name of a branch.
+ * @param {String} since A date time in YYYY-MM-DDTHH:mm:ssZ format.
+ * @param {Function} listCommits A function that queries github for commits.
+ */
 const getLatestCommitsOnBranch = async (owner, repo, branchName, since, listCommits) => {
   const commitsResult = await listCommits({ owner, repo, sha: branchName, since: since })
 
@@ -7358,7 +7350,13 @@ module.exports.Collection = Hook.Collection
 /***/ 524:
 /***/ (function(module) {
 
-
+/**
+ * Gets all of the commits on a branch.
+ * @param {String} owner The repo owner.
+ * @param {String} repo The repo name.
+ * @param {String} branchName The name of a branch.
+ * @param {Function} listCommits A function that queries github for commits.
+ */
 const getAllCommitsOnBranch = async (owner, repo, branchName, listCommits) => {
   const commitsResult = await listCommits({ owner, repo, sha: branchName })
 
@@ -7768,6 +7766,12 @@ module.exports = require("path");
 /***/ 642:
 /***/ (function(module) {
 
+/**
+ * Determines the new version number given an existing version
+ * object and the release type.
+ * @param {Object} version A version object comprising of major, minor and patch properties.
+ * @param {Object} releaseType The type of release, either 'major', 'minor' and 'patch'.
+ */
 const determineNextVersionNumber = (version, releaseType) => {
   if (releaseType === 'major') {
     return { major: version.major + 1, minor: 0, patch: 0 }
@@ -8639,6 +8643,11 @@ module.exports = require("url");
 /***/ 838:
 /***/ (function(module) {
 
+/**
+ * Returns an object where each property is an array
+ * of commit comments that have the matching commit flag.
+ * @param {Array} commits An array of commit comments.
+ */
 const sortCommitsByCommitType = commits => {
   const breakingChanges = []
   const features = []
@@ -11479,6 +11488,10 @@ function onceStrict (fn) {
 /***/ 982:
 /***/ (function(module) {
 
+/**
+ * Remove any commit flags and newlines from the string.
+ * @param {String} s A string.
+ */
 const clean = s => {
   return s
     .replace(/--break/g, '')
@@ -11490,6 +11503,11 @@ const clean = s => {
     .trim()
 }
 
+/**
+ * Compiles a markdown formatted text string combining all the
+ * commit notes, sorted by commit flag.
+ * @param {Array} sortedCommits An array of strings containing commit flags.
+ */
 const compileReleaseNotes = (sortedCommits) => {
   let result = ''
 

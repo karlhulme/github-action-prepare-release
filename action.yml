@@ -16,14 +16,6 @@ outputs:
     description: 'The type of release. One of the following values: ''major'', ''minor'' or ''patch''.'
   releaseNotes:
     description: 'A formatted markdown block containing the commit comments since the last release.'
-  ltsRelease:
-    description: 'A value of ''yes'' or ''no'' indicating if an LTS branch should be created.'
-  ltsNewBranchName:
-    description: 'The name of a new long-term-support branch that should be created in lts_vX format.'
-  ltsCloneFromTag:
-    description: 'The name of the release tag that identifies the origin branch for the new LTS branch.'
-  ltsReleaseName:
-    description: 'The name of a new release that will be created on the LTS branch.'
 runs:
   using: 'node12'
   main: 'dist/index.js'
