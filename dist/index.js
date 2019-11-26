@@ -7951,7 +7951,7 @@ const entryPoint = async () => {
   const { owner, repo } = context.repo
 
   const input = {
-    branchName: guard(core.getInput('branchName')),
+    branchName: core.getInput('branchName'),
     owner,
     repo,
     listCommits: github.repos.listCommits,
