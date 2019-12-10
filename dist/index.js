@@ -7955,7 +7955,7 @@ const entryPoint = async () => {
     owner,
     repo,
     listCommits: github.repos.listCommits,
-    listReleases: github.repos.listReleases,
+    listReleases: github.repos.listReleases
   }
 
   console.log(`Inputs\n${JSON.stringify(input, null, 2)}\n`)
