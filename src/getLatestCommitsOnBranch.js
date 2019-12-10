@@ -14,6 +14,7 @@ const getLatestCommitsOnBranch = async (owner, repo, branchName, since, listComm
 
   while (more) {
     const commitsResult = await listCommits({ owner, repo, sha: branchName, since: since || undefined, per_page: 100, page: pageNo })
+    console.log(commitsResult.data)
     commitsResultData.push(...commitsResult.data)
     more = commitsResult.data.length === 100
     pageNo++
