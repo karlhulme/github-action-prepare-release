@@ -7155,7 +7155,6 @@ module.exports = resolveCommand;
 /***/ 494:
 /***/ (function(module) {
 
-
 /**
  * Gets all of the commits on a branch since the given point.
  * @param {String} owner The repo owner.
@@ -11540,6 +11539,12 @@ const compileReleaseNotes = (sortedCommits) => {
   if (sortedCommits.docs.length > 0) {
     result += '## Documentation\n'
     result += sortedCommits.docs.map(s => `* ${clean(s)}\n`).join('')
+    result += '\n'
+  }
+
+  if (sortedCommits.misc.length > 0) {
+    result += '## Miscellaneous\n'
+    result += sortedCommits.misc.map(s => `* ${clean(s)}\n`).join('')
     result += '\n'
   }
 

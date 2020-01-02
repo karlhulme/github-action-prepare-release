@@ -46,6 +46,12 @@ const compileReleaseNotes = (sortedCommits) => {
     result += '\n'
   }
 
+  if (sortedCommits.misc.length > 0) {
+    result += '## Miscellaneous\n'
+    result += sortedCommits.misc.map(s => `* ${clean(s)}\n`).join('')
+    result += '\n'
+  }
+
   return result
 }
 

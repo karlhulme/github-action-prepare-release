@@ -6,21 +6,23 @@ const sortedCommitsWithEverything = {
   features: ['--feature can now produce pdfs', '--feature works underwater'],
   fixes: ['--fix fixed a typo in the buffer allocation', '--fix removed the trailing zeroes'],
   docs: ['--docs fixed typos in heading 2'],
-  misc: ['this will be ignored', 'as will this']
+  misc: ['this will be misc', 'as will this']
 }
 
 const sortedCommitsWithFixesOnly = {
   breakingChanges: [],
   features: [],
   fixes: ['--fix fixed a typo in the buffer allocation', '--fix removed the trailing zeroes'],
-  docs: []
+  docs: [],
+  misc: []
 }
 
 const sortedCommitsWithDocsOnly = {
   breakingChanges: [],
   features: [],
   fixes: [],
-  docs: ['--docs fixed typos in heading 2']
+  docs: ['--docs fixed typos in heading 2'],
+  misc: []
 }
 
 test('Compile release notes when all sections are included.', async () => {
@@ -33,7 +35,10 @@ test('Compile release notes when all sections are included.', async () => {
     '* fixed a typo in the buffer allocation\n' +
     '* removed the trailing zeroes\n\n' +
     '## Documentation\n' +
-    '* fixed typos in heading 2\n\n'
+    '* fixed typos in heading 2\n\n' +
+    '## Miscellaneous\n' +
+    '* this will be misc\n' +
+    '* as will this\n\n'
   )
 })
 
