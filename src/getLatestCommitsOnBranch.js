@@ -1,4 +1,3 @@
-
 /**
  * Gets all of the commits on a branch since the given point.
  * @param {String} owner The repo owner.
