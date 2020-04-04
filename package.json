@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "ncc build src/index.js -o dist",
-    "test": "jest"
+    "test": "jest",
+    "reinstall": "rm -rf node_modules && npm install"
   },
   "repository": {
     "type": "git",
@@ -18,8 +19,8 @@
   },
   "homepage": "https://github.com/karlhulme/github-action-prepare-release#readme",
   "devDependencies": {
-    "jest": "^24.9.0",
-    "standard": "^14.3.1",
+    "jest": "^25.2.7",
+    "standard": "^14.3.3",
     "@zeit/ncc": "^0.20.5"
   },
   "dependencies": {
