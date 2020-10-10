@@ -79,6 +79,15 @@ test('Prepare a first release for master.', async () => {
   })
 })
 
+test('Prepare a first release for main.', async () => {
+  await expect(run({ branchName: 'main', owner: 'boss', repo: 'test', listCommits, listReleases: () => ({ data: [] }) })).resolves.toEqual({
+    canRelease: 'yes',
+    releaseVersion: '1.0.0',
+    releaseType: 'major',
+    releaseNotes: '## Breaking Changes\n* Add red option\n\n## Fixes\n* Prevent crash on divide by zero\n\n'
+  })
+})
+
 test('Reject an attempt to perform a release on an unamed branch.', async () => {
   await expect(run({ branchName: '', owner: 'boss', repo: 'test', listCommits, listReleases })).resolves.toEqual({
     canRelease: 'no',
@@ -86,9 +95,9 @@ test('Reject an attempt to perform a release on an unamed branch.', async () => 
   })
 })
 
-test('Reject an attempt to perform a breaking release on a non-master branch.', async () => {
+test('Reject an attempt to perform a breaking release on a non-main/non-master branch.', async () => {
   await expect(run({ branchName: 'lts_v2', owner: 'boss', repo: 'test', listCommits, listReleases })).resolves.toEqual({
     canRelease: 'no',
-    releaseFailureReason: 'Error: Major releases can only be made on the master branch.'
+    releaseFailureReason: 'Error: Major releases can only be made on the main or master branches.'
   })
 })

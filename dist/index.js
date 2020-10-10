@@ -4928,8 +4928,8 @@ const run = async ({ branchName, owner, repo, listCommits, listReleases }) => {
 
     const nextVersion = determineNextVersionNumber(currentVersion, releaseType)
 
-    if (releaseType === 'major' && branchName !== 'master') {
-      throw new Error('Major releases can only be made on the master branch.')
+    if (releaseType === 'major' && !['main', 'master'].includes(branchName)) {
+      throw new Error('Major releases can only be made on the main or master branches.')
     }
 
     const sortedCommits = sortCommitsByCommitType(commits)
