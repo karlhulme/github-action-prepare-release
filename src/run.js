@@ -16,6 +16,8 @@ const run = async ({ branchName, owner, repo, listCommits, listReleases }) => {
 
     const latestReleaseOfBranch = await getLatestReleaseOfBranch(owner, repo, branchName, listReleases)
 
+    console.log('latestReleaseOfBranch', JSON.stringify(latestReleaseOfBranch, null, 2))
+
     const currentVersion = latestReleaseOfBranch
       ? determineBranchVersionNumber(latestReleaseOfBranch.tag_name)
       : { major: 0, minor: 0, patch: 0 }
